@@ -24,7 +24,9 @@ mongoose
 //middlewares
 app.use(cors());
 app.use(morgan("dev"));
-app.use(bodyParser.json()); //app.use(express.json())
+app.use(express.urlencoded({extended: true}));
+app.use(express.json()) 
+
 
 //route middleware
 app.use("/api", postRoutes);
