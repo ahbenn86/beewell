@@ -1,34 +1,42 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import Nav from './Nav'
+import Nav from './Nav';
 
-const Create = () => {
-    //state
+const UpdatePost = (props) => {
     const [state, setState] = useState({
         title: '',
         content: '',
+        slug: '',
         user: ''
     })
-    
-    //destructure values from state
-    const {title, content, user} = state
 
-    //onChange event handler
+    const {title, content, slug, user} = state 
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_API}/post/${props.match.params.slug}`)
+        .then(response => {
+            const {title, content, slug, user} = response.data
+            setState({...state, title, content, slug, user})
+        })
+        .catch(error => alert('Error loading single post'));
+    }, []);
+
+    // onchange event handler
     const handleChange = name => event => {
-        console.log("name", name, "event", event);
+        
         setState({...state, [name]: event.target.value});
     };
 
     const handleSubmit = event => {
         event.preventDefault();
         axios
-        .post(`${process.env.REACT_APP_API}/post`, { title, content, user })
+        .put(`${process.env.REACT_APP_API}/post/${slug}`, { title, content, user })
         .then(response => {
             console.log(response);
+            const {title, content, slug, user} = response.data
+            setState({...state, title, content, slug, user});
 
-            setState({...state, title: '', content: '', user: ''});
-
-            alert(`Post titled ${response.data.title} is created`);
+            alert(`Post titled ${title} is updated`);
         })
         .catch(error => {
             console.log(error.response);
@@ -37,13 +45,8 @@ const Create = () => {
         
     };
 
-
-   return (
-    <div className="container pb-5">
-        <Nav />
-    <h1>Bee Post 🐝</h1>
-    <br/>
-    <form onSubmit={handleSubmit}>
+    const showUpdateForm = () => (
+        <form onSubmit={handleSubmit}>
         <div className="form-group">
             <label className="text-muted">Title</label>
             <input onChange={handleChange('title')} value={title} type="text" className="form-control" placeholder="Post title" required/>
@@ -57,11 +60,19 @@ const Create = () => {
             <input onChange={handleChange('user')} value={user} type="text" className="form-control" placeholder="Your name" required/>
         </div>
         <div>
-            <button className="btn btn-primary">Create</button>
+            <button className="btn btn-primary">Update</button>
         </div>
     </form>
-</div>
-   )
+    )
+
+    return (
+        <div className="container pb-5">
+            <Nav />
+            <br />
+            <h1>UPDATE POST</h1>
+            {showUpdateForm()}
+        </div>
+    )
 };
 
-export default Create;
+export default UpdatePost;
