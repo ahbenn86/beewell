@@ -53,10 +53,10 @@ const App = () => {
 						<p>Author <span className="badge">{post.user}</span> Published on{''} <span className="badge">{new Date(post.createdAt).toLocaleDateString()}</span></p>
 							</div>
 							<div className="col-md-2">
-							<Link to={`/post/update/${post.slug}`} className="btn btn-sm btn-outline-warning">
+							<Link to={`/post/update/${post.slug}`} className="btn btn-sm btn-warning">
 								Update
 								</Link>
-							<button onClick={() => deleteConfirm(post.slug)} className="btn btn-sm btn-outline-danger ml-1">Delete</button>
+							<button onClick={() => deleteConfirm(post.slug)} className="btn btn-sm btn-danger ml-1">Delete</button>
 							</div>
 						</div>
 						</div>

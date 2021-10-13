@@ -16,3 +16,12 @@ body {
 	display: flex;
 	margin: 0;
 }
+
+.badge {
+	color: black;
+}
+
+.btn-sm {
+	background-color: black;
+	color: yellow;	
+}
