@@ -1,17 +1,28 @@
 import React, {useState} from 'react';
 import axios from 'axios';
 import Nav from './Nav'
+import ReactQuill from 'react-quill';
+import { getUser } from './helpers';
+import 'react-quill/dist/quill.bubble.css';
+
 
 const Create = () => {
     //state
     const [state, setState] = useState({
         title: '',
-        content: '',
-        user: ''
-    })
+        user: getUser()
+    });
+
+    const [content, setContent] = useState('')
+
+    //rich text editor handle change
+    const handleContent = (event) => {
+
+        setContent(event);
+    }
     
     //destructure values from state
-    const {title, content, user} = state
+    const {title, user} = state
 
     //onChange event handler
     const handleChange = name => event => {
@@ -26,7 +37,8 @@ const Create = () => {
         .then(response => {
             console.log(response);
 
-            setState({...state, title: '', content: '', user: ''});
+            setState({...state, title: '', user: ''});
+            setContent('')
 
             alert(`Post titled ${response.data.title} is created`);
         })
@@ -50,7 +62,9 @@ const Create = () => {
         </div>
         <div className="form-group">
             <label className="text-muted">Content</label>
-            <textarea onChange={handleChange('content')} value={content} type="text" className="form-control" placeholder="Create a buzz..." required/>
+            <ReactQuill
+            onChange={handleContent} value={content} theme="bubble" className="pb-5 mb-3" placeholder="Create a buzz..." style={{border: '1px solid #666'}}
+            />
         </div>
         <div className="form-group">
             <label className="text-muted">User</label>

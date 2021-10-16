@@ -2,6 +2,8 @@ import React, {useState, useEffect} from "react";
 import Nav from './Nav'
 import axios from 'axios';
 import { Link } from "react-router-dom";
+import renderHTML from 'react-render-html'
+import { getUser } from "./helpers";
 
 
 const App = () => {
@@ -49,15 +51,17 @@ const App = () => {
 						<div className="row">
 							<div className="col-md-10">
 							<Link to={`/post/${post.slug}`}><h2>{post.title}</h2></Link>
-						<p className="lead">{post.content.substring(0, 100)}</p>
+						<div className="lead pt-3">{renderHTML(post.content.substring(0, 500))}</div>
 						<p>Author <span className="badge">{post.user}</span> Published on{''} <span className="badge">{new Date(post.createdAt).toLocaleDateString()}</span></p>
-							</div>
+							</div>	
+							{getUser() && (
 							<div className="col-md-2">
 							<Link to={`/post/update/${post.slug}`} className="btn btn-sm btn-warning">
 								Update
 								</Link>
-							<button onClick={() => deleteConfirm(post.slug)} className="btn btn-sm btn-danger ml-1">Delete</button>
+							<button onClick={() => deleteConfirm(post.slug)} className="btn btn-sm btn-danger ml-1">Delete</button>						
 							</div>
+							)}
 						</div>
 						</div>
 					</div>
