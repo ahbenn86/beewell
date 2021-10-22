@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import Nav from './Nav';
 import ReactQuill from 'react-quill';
+import { getToken } from './helpers';
 import 'react-quill/dist/quill.bubble.css';
 
 
@@ -41,7 +42,11 @@ const UpdatePost = (props) => {
     const handleSubmit = event => {
         event.preventDefault();
         axios
-        .put(`${process.env.REACT_APP_API}/post/${slug}`, { title, content, user })
+        .put(`${process.env.REACT_APP_API}/post/${slug}`, { title, content, user }, {
+            headers: {
+                authorization: `Bearer ${getToken()}`
+            }
+        })
         .then(response => {
             console.log(response);
             const {title, content, slug, user} = response.data
