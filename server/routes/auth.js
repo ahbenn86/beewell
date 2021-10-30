@@ -3,8 +3,9 @@ const express = require("express");
 const router = express.Router();
 
 //import controller methods
-const { create } = require("../controllers/post");
+const { login } = require("../controllers/auth");
 
-router.get("/post", create);
+router.post("/login", login);
+
 
 module.exports = router;
