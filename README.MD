@@ -1,6 +1,6 @@
 # Bee Well 🐝
 
-**_Bee Well_** is a simple CRUD operating app for posting and deleteing wellness articles. It was developed using the _MERN_ stack. 
+**_Bee Well_** is a simple CRUD operating app for posting and deleting wellness articles. It was developed using the _MERN_ stack. 
 
 In your text editor simply change your directory to the client directory using command _"cd client"_.
 
@@ -24,4 +24,4 @@ npm install
 ```
 The app will load and automatically open in a new tab.    
 
-_Be Well_. 🙂 
+_Bee Well_. 🙂 
